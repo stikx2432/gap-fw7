@@ -3,6 +3,19 @@ Template7.registerHelper('json_stringify', function (context) {
     return JSON.stringify(context);
 });
 
+// Init couchDB and do magic
+var db = new PouchDB('test_remote');
+
+var localData = [];
+getData();
+db.info().then(function (info) {
+  holderObj = info;
+  console.log(holderObj);
+})
+
+
+
+
 // Initialize your app
 var myApp = new Framework7({
     animateNavBackIcon: true,
@@ -14,24 +27,24 @@ var myApp = new Framework7({
     template7Data: {
         // Will be applied for page with "projects.html" url
         'url:projects.html': {
-            firstname: 'John',
-            lastname: 'Doe',
+            firstname: "John",
+            lastname: "Doe",
             age: 32,
-            position: 'CEO',
-            company: 'Google',
-            interests: ['swimming', 'music', 'JavaScript', 'iMac', 'iOS apps', 'sport'],
+            position: "CEO",
+            company: "Google",
+            interests: ["swimming", "music", "JavaScript", "iMac", "iOS apps", "sport"],
             projects: [
                 {
-                    title: 'Google',
-                    description: 'Nice search engine'
+                    title: "Google",
+                    description: "Nice search engine"
                 },
                 {
-                    title: 'YouTube',
-                    description: 'Online video service'
+                    title: "YouTube",
+                    description: "Online video service"
                 },
                 {
-                    title: 'Android',
-                    description: 'Mobile operating system'
+                    title: "Android",
+                    description: "Mobile operating system"
                 }
             ]
         },
@@ -80,14 +93,8 @@ var myApp = new Framework7({
             },
         ],
 
-        // Another plain data object, used in "about" link in data-contextName object 
-        about: {
-            name: 'John Doe',
-            age: 32,
-            position: 'CEO',
-            company: 'Google',
-            interests: ['swimming', 'music', 'JavaScript', 'iMac', 'iOS apps', 'sport']
-        }
+        // Another plain data object, used in "tasks" link in data-contextName object
+        tasks: localData
     }
 });
 
@@ -97,5 +104,75 @@ var $$ = Dom7;
 // Add main View
 var mainView = myApp.addView('.view-main', {
     // Enable dynamic Navbar
-    dynamicNavbar: true,
+    dynamicNavbar: false,
 });
+
+
+
+$$('#taskButton').on('click', function () {
+  var inputText = $$('#task').val();
+  var randId = randomString(6);
+  console.log(randId);
+  if (inputText !== '') {
+      db.get(randId).catch(function(err) {
+          if (err.name === 'not_found') {
+              return {
+                  '_id': randId,
+                  'task': inputText
+              }
+          } else {
+              throw err;
+          }
+      }).then(function (doc) {
+
+          doc._id = randId;
+          doc.task = inputText;
+          // global object to hold tasks for template7Data
+
+          console.log(doc);
+
+          return db.put(doc);
+        }).then(function() {
+            return db.get(randId).then(function(doc) {
+              myApp.alert('Task: ' + doc.task + 'Task _id:' + doc._id + ' inputed to DB.', 'Success!')
+            })
+          })
+    } else {
+      myApp.alert('You didn\'t input anything', 'Hey!', function () {
+
+      })
+    }
+
+
+  });
+
+
+
+function getData () {
+  db.allDocs({
+    include_docs: true,
+    attachments: true
+  }).then(function (result) {
+
+    for (var i = 0; i < result.rows.length; i++) {
+      if (result.rows[i].doc.task !== undefined) {
+        localData.push( { task: result.rows[i].doc.task } );
+      }
+
+    }
+
+  }).catch(function (err) {
+    console.log(err);
+  });
+}
+
+var randomString = function(length) {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for(var i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+};
+
+

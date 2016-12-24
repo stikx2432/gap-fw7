@@ -144,7 +144,8 @@
                             "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
                             "count": 1
                         }
-                    ]
+                    ],
+                    "/manifest/application": []
                 }
             }
         }

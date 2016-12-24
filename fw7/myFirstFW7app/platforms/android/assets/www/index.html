@@ -18,46 +18,15 @@
     <div class="panel-overlay"></div>
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
-      <div class="content-block">
-        <p>Left panel content goes here</p>
-      </div>
-    </div>
-    <!-- Right panel with cover effect-->
-    <div class="panel panel-right panel-cover">
-      <div class="content-block">
-        <p>Right panel content goes here</p>
-      </div>
-    </div>
-    <!-- Views-->
-    <div class="views">
-      <!-- Your main view, should have "view-main" class-->
-      <div class="view view-main">
-        <!-- Top Navbar-->
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="center sliding">Template7 Pages</div>
-            <div class="right"><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a></div>
-          </div>
-        </div>
-        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
-        <div class="pages navbar-through toolbar-through">
-          <!-- Index Page-->
-          <div data-page="index" class="page">
-            <div class="page-content">
-              <div class="content-block-title">Welcome To My Awesome App</div>
-              <div class="content-block">
-                <div class="content-block-inner">
-                  <p>This app illustrates how you can use built-in template engine Template7 to render pages with required data.</p>
-                </div>
-              </div>
-              <div class="list-block">
+
+        <div class="list-block">
                 <ul>
-                  <li><a href="#" data-template="about" data-context-name="about" class="item-link item-content">
-                      <div class="item-inner"> 
-                        <div class="item-title">About Me</div>
+                  <li><a href="#" data-template="tasks" data-context-name="tasks" data-view=".view-main" class="item-link item-content">
+                      <div class="item-inner">
+                        <div class="item-title">Tasks</div>
                       </div></a></li>
                   <li><a href="projects.html" class="item-link item-content">
-                      <div class="item-inner"> 
+                      <div class="item-inner">
                         <div class="item-title">My Projects</div>
                       </div></a></li>
                   <li><a href="cars.html" data-context-name="cars" class="item-link item-content">
@@ -70,6 +39,78 @@
                       </div></a></li>
                 </ul>
               </div>
+
+    </div>
+    <!-- Right panel with cover effect-->
+
+    <div class="panel panel-right panel-cover" >
+        <div class="view view-panel">
+          <div class="pages">
+            <!-- Index Page-->
+            <div data-page="tasks" class="page navbar-fixed toolbar-fixed">
+              <div class="page-content">
+
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <div class="views">
+    <div class="view view-main">
+      <div class="pages">
+        <!-- Now we need additional "navbar-fixed" and "toolbar-fixed" classes on Page -->
+        <div data-page="index" class="page navbar-fixed toolbar-fixed">
+            
+          <!-- Top Navbar-->
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="center">Awesome App</div><br>
+              <a href="#" class="back link">Back</a>
+            </div>
+          </div>
+          <!-- /End of Top Navbar-->
+ 
+          <div class="page-content">
+           
+              <div class="content-block-title">Welcome To My Awesome App</div>
+              <div class="list-block">
+
+                  <p>This app illustrates how you can use built-in template engine Template7 to render pages with required data.</p>
+                  <div class="card">
+                    <div class="card-header">Set a simple reminder</div>
+                    <div class="card-content">
+                    <div class="card-content-inner">
+
+                        <div class="item-input">
+                          <input type="text" name="task" placeholder="Enter task here" id="task"><br>
+
+                        </div>
+
+
+                  </div>
+                    <div class="card-footer">
+                      <div class="col-15">
+                        <button id="taskButton">Set Reminder</button>
+                      </div>
+                      <div class="col-85"></div>
+                    </div>
+
+                  </div>
+
+              </div>
+              <!-- swiper properties in data- attributes -->
+              <div class="swiper-container swiper-init" data-speed="400" data-space-between="40" data-pagination=".swiper-pagination">
+                  <div class="swiper-wrapper">
+                      <div class="swiper-slide">Slide 1</div>
+                      <div class="swiper-slide">Slide 2</div>
+                      <div class="swiper-slide">Slide 3</div>
+                      
+                  </div>
+                  <div class="swiper-pagination"></div>
+              </div>      
+
               <div class="content-block-title">Side panels</div>
               <div class="content-block">
                 <div class="row">
@@ -79,38 +120,65 @@
               </div>
             </div>
           </div>
-        </div>
-        <!-- Bottom Toolbar-->
-        <div class="toolbar">
-          <div class="toolbar-inner"><a href="#" class="link">Link 1</a><a href="#" class="link">Link 2</a></div>
-        </div>
-      </div>
+            
+          
     </div>
-    <!-- Template7 templates-->
-    <script type="text/template7" id="about">
-      <div class="navbar">
-        <div class="navbar-inner">
-          <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
-          <div class="center sliding">About Me</div>
-          <div class="right"><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a></div>
+  </div>       
+          <!-- /End of Bottom Toolbar-->
+            
         </div>
       </div>
+    
+
+
+            
+
+
+         
+       
+
+    <!-- Template7 templates-->
+
+    <script type="text/template7" id="tasks">
+      
       <div class="pages">
-        <div data-page="about" class="page">
-          <div class="page-content">
-            <div class="content-block">
-              <div class="content-block-inner">
-                <p>Hello, my name is {{name}}. I am {{age}} years old and i am working as {{position}} at {{company}}.</p>
-                <p>I have a lot of interests: {{#if interests}}{{join interests delimeter=", "}}{{/if}}</p>
+        <div data-page="tasks" class="page navbar-fixed toolbar-fixed">
+
+          <!-- Top Navbar-->
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="center">Awesome App</div><br>
+                <a href="#" class="back link">Back</a>
               </div>
+            </div>
+          <!-- /End of Top Navbar-->
+
+          <div class="page-content">
+            <div class="list-block">
+              
+                <ul>{{#each this}}
+                  <li class="item-content">
+                    <div class="item-inner" data-context-name="tasks.{{@index}}">
+                      {{task}}
+                    </div>
+                  </li>
+                    {{/each }}
+                </ul>
+              
             </div>
           </div>
         </div>
       </div>
+
     </script>
+
+
+
     <!-- Path to Framework7 Library JS-->
     <script src="cordova.js"></script>
+    <!--script src="js/camera.js"></script-->
     <script type="text/javascript" src="js/fw7/framework7.min.js"></script>
+    <script src="js/pouchdb-6.1.0.min.js"></script>
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/my-app.js"></script>
   </body>
